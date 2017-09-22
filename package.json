@@ -1,0 +1,38 @@
+{
+  "name": "guacamole-common-js",
+  "version": "0.9.13-incubating",
+  "description": "The Guacamole javascript client",
+  "scripts": {
+    "prepublishOnly": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/padarom/guacamole-common-js.git"
+  },
+  "keywords": [
+    "guacamole",
+    "common",
+    "js",
+    "guac",
+    "remote",
+    "desktop",
+    "vnc",
+    "rdp",
+    "ssh",
+    "telnet"
+  ],
+  "author": "Christopher Mühl <christopher@padarom.io>",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://issues.apache.org/jira/browse/GUACAMOLE/"
+  },
+  "homepage": "https://github.com/padarom/guacamole-common-js#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.0"
+  },
+  "dependencies": {
+    "gulp-rename": "^1.2.2"
+  }
+}
