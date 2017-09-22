@@ -1,0 +1,14 @@
+# Directories
+doc
+extensions
+guacamole
+guacamole-common
+guacamole-common-js
+guacamole-docker
+guacamole-ext
+
+# Files
+.dockerignore
+Dockerfile
+pom.xml
+project-assembly.xml
