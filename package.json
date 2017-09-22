@@ -1,6 +1,6 @@
 {
   "name": "guacamole-common-js",
-  "version": "0.9.13-incubating-c",
+  "version": "0.9.13-incubating-d",
   "description": "The Guacamole javascript client",
   "main": "dist/guacamole-common.js",
   "scripts": {
@@ -32,9 +32,7 @@
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-insert": "^0.5.0",
-    "gulp-uglify": "^3.0.0"
-  },
-  "dependencies": {
+    "gulp-uglify": "^3.0.0",
     "gulp-rename": "^1.2.2"
   }
 }
