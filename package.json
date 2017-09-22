@@ -1,7 +1,8 @@
 {
   "name": "guacamole-common-js",
-  "version": "0.9.13-incubating",
+  "version": "0.9.13-incubating-b",
   "description": "The Guacamole javascript client",
+  "main": "dist/guacamole-common.js",
   "scripts": {
     "prepublishOnly": "gulp"
   },
