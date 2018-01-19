@@ -27,7 +27,7 @@
     <artifactId>guacamole-auth-jdbc-dist</artifactId>
     <packaging>jar</packaging>
     <name>guacamole-auth-jdbc-dist</name>
-    <url>http://guacamole.incubator.apache.org/</url>
+    <url>http://guacamole.apache.org/</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,7 +36,7 @@
     <parent>
         <groupId>org.apache.guacamole</groupId>
         <artifactId>guacamole-auth-jdbc</artifactId>
-        <version>0.9.13-incubating</version>
+        <version>0.9.14</version>
         <relativePath>../../</relativePath>
     </parent>
 
@@ -99,14 +99,21 @@
         <dependency>
             <groupId>org.apache.guacamole</groupId>
             <artifactId>guacamole-auth-jdbc-mysql</artifactId>
-            <version>0.9.13-incubating</version>
+            <version>0.9.14</version>
         </dependency>
 
         <!-- PostgreSQL Authentication Extension -->
         <dependency>
             <groupId>org.apache.guacamole</groupId>
             <artifactId>guacamole-auth-jdbc-postgresql</artifactId>
-            <version>0.9.13-incubating</version>
+            <version>0.9.14</version>
+        </dependency>
+
+        <!-- SQL Server Authentication Extension -->
+        <dependency>
+            <groupId>org.apache.guacamole</groupId>
+            <artifactId>guacamole-auth-jdbc-sqlserver</artifactId>
+            <version>0.9.14</version>
         </dependency>
 
     </dependencies>

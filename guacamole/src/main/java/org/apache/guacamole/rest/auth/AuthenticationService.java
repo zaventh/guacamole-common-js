@@ -24,9 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.guacamole.GuacamoleException;
 import org.apache.guacamole.GuacamoleSecurityException;
 import org.apache.guacamole.GuacamoleUnauthorizedException;
+import org.apache.guacamole.GuacamoleSession;
 import org.apache.guacamole.environment.Environment;
 import org.apache.guacamole.net.auth.AuthenticatedUser;
 import org.apache.guacamole.net.auth.AuthenticationProvider;
@@ -35,7 +37,9 @@ import org.apache.guacamole.net.auth.UserContext;
 import org.apache.guacamole.net.auth.credentials.CredentialsInfo;
 import org.apache.guacamole.net.auth.credentials.GuacamoleCredentialsException;
 import org.apache.guacamole.net.auth.credentials.GuacamoleInvalidCredentialsException;
-import org.apache.guacamole.GuacamoleSession;
+import org.apache.guacamole.net.event.AuthenticationFailureEvent;
+import org.apache.guacamole.net.event.AuthenticationSuccessEvent;
+import org.apache.guacamole.rest.event.ListenerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,6 +77,12 @@ public class AuthenticationService {
      */
     @Inject
     private AuthTokenGenerator authTokenGenerator;
+
+    /**
+     * The service to use to notify registered authentication listeners.
+     */
+    @Inject
+    private ListenerService listenerService;
 
     /**
      * Regular expression which matches any IPv4 address.
@@ -208,6 +218,35 @@ public class AuthenticationService {
     }
 
     /**
+     * Notify all bound listeners that a successful authentication
+     * has occurred.
+     *
+     * @param authenticatedUser
+     *      The user that was successfully authenticated.
+     *
+     * @throws GuacamoleException
+     *      If thrown by a listener.
+     */
+    private void fireAuthenticationSuccessEvent(AuthenticatedUser authenticatedUser)
+            throws GuacamoleException {
+        listenerService.handleEvent(new AuthenticationSuccessEvent(authenticatedUser));
+    }
+
+    /**
+     * Notify all bound listeners that an authentication attempt has failed.
+     *
+     * @param credentials
+     *      The credentials that failed to authenticate.
+     *
+     * @throws GuacamoleException
+     *      If thrown by a listener.
+     */
+    private void fireAuthenticationFailedEvent(Credentials credentials)
+            throws GuacamoleException {
+        listenerService.handleEvent(new AuthenticationFailureEvent(credentials));
+    }
+
+    /**
      * Returns the AuthenticatedUser associated with the given session and
      * credentials, performing a fresh authentication and creating a new
      * AuthenticatedUser if necessary.
@@ -232,11 +271,17 @@ public class AuthenticationService {
         try {
 
             // Re-authenticate user if session exists
-            if (existingSession != null)
-                return updateAuthenticatedUser(existingSession.getAuthenticatedUser(), credentials);
+            if (existingSession != null) {
+                AuthenticatedUser updatedUser = updateAuthenticatedUser(
+                        existingSession.getAuthenticatedUser(), credentials);
+                fireAuthenticationSuccessEvent(updatedUser);
+                return updatedUser;
+            }
 
             // Otherwise, attempt authentication as a new user
             AuthenticatedUser authenticatedUser = AuthenticationService.this.authenticateUser(credentials);
+            fireAuthenticationSuccessEvent(authenticatedUser);
+
             if (logger.isInfoEnabled())
                 logger.info("User \"{}\" successfully authenticated from {}.",
                         authenticatedUser.getIdentifier(),
@@ -248,6 +293,8 @@ public class AuthenticationService {
 
         // Log and rethrow any authentication errors
         catch (GuacamoleException e) {
+
+            fireAuthenticationFailedEvent(credentials);
 
             // Get request and username for sake of logging
             HttpServletRequest request = credentials.getRequest();

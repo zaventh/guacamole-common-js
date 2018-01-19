@@ -26,9 +26,9 @@
     <groupId>org.apache.guacamole</groupId>
     <artifactId>guacamole-auth-jdbc</artifactId>
     <packaging>pom</packaging>
-    <version>0.9.13-incubating</version>
+    <version>0.9.14</version>
     <name>guacamole-auth-jdbc</name>
-    <url>http://guacamole.incubator.apache.org/</url>
+    <url>http://guacamole.apache.org/</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -70,6 +70,7 @@
         <!-- Database-specific implementations -->
         <module>modules/guacamole-auth-jdbc-mysql</module>
         <module>modules/guacamole-auth-jdbc-postgresql</module>
+        <module>modules/guacamole-auth-jdbc-sqlserver</module>
 
     </modules>
 
@@ -80,7 +81,7 @@
             <dependency>
                 <groupId>org.apache.guacamole</groupId>
                 <artifactId>guacamole-ext</artifactId>
-                <version>0.9.13-incubating</version>
+                <version>0.9.14</version>
                 <scope>provided</scope>
             </dependency>
 
