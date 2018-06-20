@@ -1,6 +1,6 @@
 {
   "name": "guacamole-common-js",
-  "version": "0.9.14-b",
+  "version": "1.0.0",
   "description": "The Guacamole javascript client",
   "main": "dist/guacamole-common.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/padarom/guacamole-common-js.git"
   },
   "files": [
-      "dist"
+    "dist"
   ],
   "keywords": [
     "guacamole",
