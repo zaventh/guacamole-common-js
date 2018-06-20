@@ -26,9 +26,12 @@ import org.apache.guacamole.auth.jdbc.connection.ConnectionDirectory;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import org.apache.guacamole.GuacamoleException;
 import org.apache.guacamole.auth.jdbc.base.RestrictedObject;
 import org.apache.guacamole.auth.jdbc.activeconnection.ActiveConnectionDirectory;
+import org.apache.guacamole.auth.jdbc.base.ActivityRecordModel;
 import org.apache.guacamole.auth.jdbc.connection.ConnectionRecordSet;
 import org.apache.guacamole.auth.jdbc.connection.ModeledConnection;
 import org.apache.guacamole.auth.jdbc.connectiongroup.ModeledConnectionGroup;
@@ -44,7 +47,8 @@ import org.apache.guacamole.net.auth.ConnectionGroup;
 import org.apache.guacamole.net.auth.Directory;
 import org.apache.guacamole.net.auth.SharingProfile;
 import org.apache.guacamole.net.auth.User;
-import org.apache.guacamole.net.auth.simple.SimpleActivityRecordSet;
+import org.apache.guacamole.net.auth.UserGroup;
+import org.apache.guacamole.net.auth.simple.SimpleDirectory;
 
 /**
  * UserContext implementation which is driven by an arbitrary, underlying
@@ -99,7 +103,24 @@ public class ModeledUserContext extends RestrictedObject
      */
     @Inject
     private Provider<ConnectionRecordSet> connectionRecordSetProvider;
-    
+
+    /**
+     * Provider for creating user record sets.
+     */
+    @Inject
+    private Provider<UserRecordSet> userRecordSetProvider;
+
+    /**
+     * Mapper for user login records.
+     */
+    @Inject
+    private UserRecordMapper userRecordMapper;
+
+    /**
+     * The activity record associated with this user's Guacamole session.
+     */
+    private ActivityRecordModel userRecord;
+
     @Override
     public void init(ModeledAuthenticatedUser currentUser) {
 
@@ -111,6 +132,15 @@ public class ModeledUserContext extends RestrictedObject
         connectionGroupDirectory.init(currentUser);
         sharingProfileDirectory.init(currentUser);
         activeConnectionDirectory.init(currentUser);
+
+        // Create login record for user
+        userRecord = new ActivityRecordModel();
+        userRecord.setUsername(currentUser.getIdentifier());
+        userRecord.setStartDate(new Date());
+        userRecord.setRemoteHost(currentUser.getCredentials().getRemoteHostname());
+
+        // Insert record representing login
+        userRecordMapper.insert(userRecord);
 
     }
 
@@ -132,6 +162,11 @@ public class ModeledUserContext extends RestrictedObject
     @Override
     public Directory<User> getUserDirectory() throws GuacamoleException {
         return userDirectory;
+    }
+
+    @Override
+    public Directory<UserGroup> getUserGroupDirectory() throws GuacamoleException {
+        return new SimpleDirectory<UserGroup>();
     }
 
     @Override
@@ -167,7 +202,9 @@ public class ModeledUserContext extends RestrictedObject
     @Override
     public ActivityRecordSet<ActivityRecord> getUserHistory()
             throws GuacamoleException {
-        return new SimpleActivityRecordSet<ActivityRecord>();
+        UserRecordSet userRecordSet = userRecordSetProvider.get();
+        userRecordSet.init(getCurrentUser());
+        return userRecordSet;
     }
 
     @Override
@@ -183,6 +220,11 @@ public class ModeledUserContext extends RestrictedObject
     @Override
     public Collection<Form> getUserAttributes() {
         return ModeledUser.ATTRIBUTES;
+    }
+
+    @Override
+    public Collection<Form> getUserGroupAttributes() {
+        return Collections.<Form>emptyList();
     }
 
     @Override
@@ -202,7 +244,11 @@ public class ModeledUserContext extends RestrictedObject
 
     @Override
     public void invalidate() {
-        // Nothing to invalidate
+
+        // Record logout time
+        userRecord.setEndDate(new Date());
+        userRecordMapper.update(userRecord);
+
     }
 
 }

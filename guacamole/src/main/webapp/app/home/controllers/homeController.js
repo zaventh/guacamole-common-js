@@ -32,6 +32,7 @@ angular.module('home').controller('homeController', ['$scope', '$injector',
     var authenticationService  = $injector.get('authenticationService');
     var connectionGroupService = $injector.get('connectionGroupService');
     var dataSourceService      = $injector.get('dataSourceService');
+    var requestService         = $injector.get('requestService');
 
     /**
      * Map of data source identifier to the root connection group of that data
@@ -69,7 +70,7 @@ angular.module('home').controller('homeController', ['$scope', '$injector',
      */
     $scope.isLoaded = function isLoaded() {
 
-        return $scope.rootConnectionGroup !== null;
+        return $scope.rootConnectionGroups !== null;
 
     };
 
@@ -126,6 +127,6 @@ angular.module('home').controller('homeController', ['$scope', '$injector',
     )
     .then(function rootGroupsRetrieved(rootConnectionGroups) {
         $scope.rootConnectionGroups = rootConnectionGroups;
-    });
+    }, requestService.WARN);
 
 }]);

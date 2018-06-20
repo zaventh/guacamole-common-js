@@ -137,6 +137,7 @@
         "TEXT_CLIENT_STATUS_IDLE"         : "Idle.",
         "TEXT_CLIENT_STATUS_CONNECTING"   : "Connecting to Guacamole...",
         "TEXT_CLIENT_STATUS_DISCONNECTED" : "You have been disconnected.",
+        "TEXT_CLIENT_STATUS_UNSTABLE"     : "The network connection to the Guacamole server appears unstable.",
         "TEXT_CLIENT_STATUS_WAITING"      : "Connected to Guacamole. Waiting for response...",
         "TEXT_RECONNECT_COUNTDOWN"        : "Reconnecting in {REMAINING} {REMAINING, plural, one{second} other{seconds}}...",
         "TEXT_FILE_TRANSFER_PROGRESS"     : "{PROGRESS} {UNIT, select, b{B} kb{KB} mb{MB} gb{GB} other{}}",
@@ -234,6 +235,7 @@
 
         "ACTION_ACKNOWLEDGE"   : "@:APP.ACTION_ACKNOWLEDGE",
         "ACTION_CANCEL"        : "@:APP.ACTION_CANCEL",
+        "ACTION_CLONE"         : "@:APP.ACTION_CLONE",
         "ACTION_DELETE"        : "@:APP.ACTION_DELETE",
         "ACTION_SAVE"          : "@:APP.ACTION_SAVE",
 
@@ -328,6 +330,9 @@
         "FIELD_HEADER_ENABLE_FONT_SMOOTHING"      : "Enable font smoothing (ClearType):",
         "FIELD_HEADER_ENABLE_FULL_WINDOW_DRAG"    : "Enable full-window drag:",
         "FIELD_HEADER_ENABLE_MENU_ANIMATIONS"     : "Enable menu animations:",
+        "FIELD_HEADER_DISABLE_BITMAP_CACHING"     : "Disable bitmap caching:",
+        "FIELD_HEADER_DISABLE_OFFSCREEN_CACHING"  : "Disable off-screen caching:",
+        "FIELD_HEADER_DISABLE_GLYPH_CACHING"      : "Disable glyph caching:",
         "FIELD_HEADER_ENABLE_PRINTING"            : "Enable printing:",
         "FIELD_HEADER_ENABLE_SFTP"     : "Enable SFTP:",
         "FIELD_HEADER_ENABLE_THEMING"             : "Enable theming:",
@@ -347,6 +352,9 @@
         "FIELD_HEADER_PRECONNECTION_BLOB" : "Preconnection BLOB (VM ID):",
         "FIELD_HEADER_PRECONNECTION_ID"   : "RDP source ID:",
         "FIELD_HEADER_READ_ONLY"      : "Read-only:",
+        "FIELD_HEADER_RECORDING_EXCLUDE_MOUSE"  : "Exclude mouse:",
+        "FIELD_HEADER_RECORDING_EXCLUDE_OUTPUT" : "Exclude graphics/streams:",
+        "FIELD_HEADER_RECORDING_INCLUDE_KEYS"   : "Include key events:",
         "FIELD_HEADER_RECORDING_NAME" : "Recording name:",
         "FIELD_HEADER_RECORDING_PATH" : "Recording path:",
         "FIELD_HEADER_RESIZE_METHOD" : "Resize method:",
@@ -386,6 +394,7 @@
 
         "FIELD_OPTION_SERVER_LAYOUT_DE_DE_QWERTZ" : "German (Qwertz)",
         "FIELD_OPTION_SERVER_LAYOUT_EMPTY"        : "",
+        "FIELD_OPTION_SERVER_LAYOUT_EN_GB_QWERTY" : "UK English (Qwerty)",
         "FIELD_OPTION_SERVER_LAYOUT_EN_US_QWERTY" : "US English (Qwerty)",
         "FIELD_OPTION_SERVER_LAYOUT_ES_ES_QWERTY" : "Spanish (Qwerty)",
         "FIELD_OPTION_SERVER_LAYOUT_FAILSAFE"     : "Unicode",
@@ -393,7 +402,9 @@
         "FIELD_OPTION_SERVER_LAYOUT_FR_FR_AZERTY" : "French (Azerty)",
         "FIELD_OPTION_SERVER_LAYOUT_IT_IT_QWERTY" : "Italian (Qwerty)",
         "FIELD_OPTION_SERVER_LAYOUT_JA_JP_QWERTY" : "Japanese (Qwerty)",
+        "FIELD_OPTION_SERVER_LAYOUT_PT_BR_QWERTY" : "Portuguese Brazilian (Qwerty)",
         "FIELD_OPTION_SERVER_LAYOUT_SV_SE_QWERTY" : "Swedish (Qwerty)",
+        "FIELD_OPTION_SERVER_LAYOUT_TR_TR_QWERTY" : "Turkish-Q (Qwerty)",
 
         "NAME" : "RDP",
 
@@ -414,8 +425,9 @@
 
     "PROTOCOL_SSH" : {
 
+        "FIELD_HEADER_BACKSPACE"    : "Backspace key sends:",
         "FIELD_HEADER_COLOR_SCHEME" : "Color scheme:",
-        "FIELD_HEADER_COMMAND"     : "Execute command:",
+        "FIELD_HEADER_COMMAND"      : "Execute command:",
         "FIELD_HEADER_CREATE_RECORDING_PATH" : "Automatically create recording path:",
         "FIELD_HEADER_CREATE_TYPESCRIPT_PATH" : "Automatically create typescript path:",
         "FIELD_HEADER_FONT_NAME"   : "Font name:",
@@ -428,18 +440,20 @@
         "FIELD_HEADER_PORT"        : "Port:",
         "FIELD_HEADER_PRIVATE_KEY" : "Private key:",
         "FIELD_HEADER_READ_ONLY"   : "Read-only:",
+        "FIELD_HEADER_RECORDING_EXCLUDE_MOUSE"  : "Exclude mouse:",
+        "FIELD_HEADER_RECORDING_EXCLUDE_OUTPUT" : "Exclude graphics/streams:",
+        "FIELD_HEADER_RECORDING_INCLUDE_KEYS"   : "Include key events:",
         "FIELD_HEADER_RECORDING_NAME" : "Recording name:",
         "FIELD_HEADER_RECORDING_PATH" : "Recording path:",
         "FIELD_HEADER_SERVER_ALIVE_INTERVAL" : "Server keepalive interval:",
         "FIELD_HEADER_SFTP_ROOT_DIRECTORY"   : "File browser root directory:",
+        "FIELD_HEADER_TERMINAL_TYPE"   : "Terminal type:",
         "FIELD_HEADER_TYPESCRIPT_NAME" : "Typescript name:",
         "FIELD_HEADER_TYPESCRIPT_PATH" : "Typescript path:",
 
-        "FIELD_OPTION_COLOR_SCHEME_BLACK_WHITE" : "Black on white",
-        "FIELD_OPTION_COLOR_SCHEME_EMPTY"       : "",
-        "FIELD_OPTION_COLOR_SCHEME_GRAY_BLACK"  : "Gray on black",
-        "FIELD_OPTION_COLOR_SCHEME_GREEN_BLACK" : "Green on black",
-        "FIELD_OPTION_COLOR_SCHEME_WHITE_BLACK" : "White on black",
+        "FIELD_OPTION_BACKSPACE_EMPTY" : "",
+        "FIELD_OPTION_BACKSPACE_8"     : "Backspace (Ctrl-H)",
+        "FIELD_OPTION_BACKSPACE_127"   : "Delete (Ctrl-?)",
 
         "FIELD_OPTION_FONT_SIZE_8"     : "8",
         "FIELD_OPTION_FONT_SIZE_9"     : "9",
@@ -457,9 +471,18 @@
         "FIELD_OPTION_FONT_SIZE_96"    : "96",
         "FIELD_OPTION_FONT_SIZE_EMPTY" : "",
 
+        "FIELD_OPTION_TERMINAL_TYPE_ANSI"           : "ansi",
+        "FIELD_OPTION_TERMINAL_TYPE_EMPTY"          : "",
+        "FIELD_OPTION_TERMINAL_TYPE_LINUX"          : "linux",
+        "FIELD_OPTION_TERMINAL_TYPE_VT100"          : "vt100",
+        "FIELD_OPTION_TERMINAL_TYPE_VT220"          : "vt220",
+        "FIELD_OPTION_TERMINAL_TYPE_XTERM"          : "xterm",
+        "FIELD_OPTION_TERMINAL_TYPE_XTERM_256COLOR" : "xterm-256color",
+
         "NAME" : "SSH",
 
         "SECTION_HEADER_AUTHENTICATION" : "Authentication",
+        "SECTION_HEADER_BEHAVIOR"       : "Terminal behavior",
         "SECTION_HEADER_DISPLAY"        : "Display",
         "SECTION_HEADER_NETWORK"        : "Network",
         "SECTION_HEADER_RECORDING"      : "Screen Recording",
@@ -471,6 +494,7 @@
 
     "PROTOCOL_TELNET" : {
 
+        "FIELD_HEADER_BACKSPACE"      : "Backspace key sends:",
         "FIELD_HEADER_COLOR_SCHEME"   : "Color scheme:",
         "FIELD_HEADER_CREATE_RECORDING_PATH" : "Automatically create recording path:",
         "FIELD_HEADER_CREATE_TYPESCRIPT_PATH" : "Automatically create typescript path:",
@@ -482,16 +506,18 @@
         "FIELD_HEADER_PASSWORD_REGEX" : "Password regular expression:",
         "FIELD_HEADER_PORT"           : "Port:",
         "FIELD_HEADER_READ_ONLY"      : "Read-only:",
+        "FIELD_HEADER_RECORDING_EXCLUDE_MOUSE"  : "Exclude mouse:",
+        "FIELD_HEADER_RECORDING_EXCLUDE_OUTPUT" : "Exclude graphics/streams:",
+        "FIELD_HEADER_RECORDING_INCLUDE_KEYS"   : "Include key events:",
         "FIELD_HEADER_RECORDING_NAME" : "Recording name:",
         "FIELD_HEADER_RECORDING_PATH" : "Recording path:",
+        "FIELD_HEADER_TERMINAL_TYPE"   : "Terminal type:",
         "FIELD_HEADER_TYPESCRIPT_NAME" : "Typescript name:",
         "FIELD_HEADER_TYPESCRIPT_PATH" : "Typescript path:",
 
-        "FIELD_OPTION_COLOR_SCHEME_BLACK_WHITE" : "Black on white",
-        "FIELD_OPTION_COLOR_SCHEME_EMPTY"       : "",
-        "FIELD_OPTION_COLOR_SCHEME_GRAY_BLACK"  : "Gray on black",
-        "FIELD_OPTION_COLOR_SCHEME_GREEN_BLACK" : "Green on black",
-        "FIELD_OPTION_COLOR_SCHEME_WHITE_BLACK" : "White on black",
+        "FIELD_OPTION_BACKSPACE_EMPTY" : "",
+        "FIELD_OPTION_BACKSPACE_8"     : "Backspace (Ctrl-H)",
+        "FIELD_OPTION_BACKSPACE_127"   : "Delete (Ctrl-?)",
 
         "FIELD_OPTION_FONT_SIZE_8"     : "8",
         "FIELD_OPTION_FONT_SIZE_9"     : "9",
@@ -509,9 +535,18 @@
         "FIELD_OPTION_FONT_SIZE_96"    : "96",
         "FIELD_OPTION_FONT_SIZE_EMPTY" : "",
 
+        "FIELD_OPTION_TERMINAL_TYPE_ANSI"           : "ansi",
+        "FIELD_OPTION_TERMINAL_TYPE_EMPTY"          : "",
+        "FIELD_OPTION_TERMINAL_TYPE_LINUX"          : "linux",
+        "FIELD_OPTION_TERMINAL_TYPE_VT100"          : "vt100",
+        "FIELD_OPTION_TERMINAL_TYPE_VT220"          : "vt220",
+        "FIELD_OPTION_TERMINAL_TYPE_XTERM"          : "xterm",
+        "FIELD_OPTION_TERMINAL_TYPE_XTERM_256COLOR" : "xterm-256color",
+
         "NAME" : "Telnet",
 
         "SECTION_HEADER_AUTHENTICATION" : "Authentication",
+        "SECTION_HEADER_BEHAVIOR"       : "Terminal behavior",
         "SECTION_HEADER_DISPLAY"        : "Display",
         "SECTION_HEADER_RECORDING"      : "Screen Recording",
         "SECTION_HEADER_TYPESCRIPT"     : "Typescript (Text Session Recording)",
@@ -534,6 +569,9 @@
         "FIELD_HEADER_PASSWORD"         : "Password:",
         "FIELD_HEADER_PORT"             : "Port:",
         "FIELD_HEADER_READ_ONLY"        : "Read-only:",
+        "FIELD_HEADER_RECORDING_EXCLUDE_MOUSE"  : "Exclude mouse:",
+        "FIELD_HEADER_RECORDING_EXCLUDE_OUTPUT" : "Exclude graphics/streams:",
+        "FIELD_HEADER_RECORDING_INCLUDE_KEYS"   : "Include key events:",
         "FIELD_HEADER_RECORDING_NAME" : "Recording name:",
         "FIELD_HEADER_RECORDING_PATH" : "Recording path:",
         "FIELD_HEADER_SFTP_DIRECTORY"             : "Default upload directory:",
@@ -676,9 +714,14 @@
 
         "FIELD_PLACEHOLDER_FILTER" : "@:APP.FIELD_PLACEHOLDER_FILTER",
 
+        "FORMAT_DATE" : "@:APP.FORMAT_DATE_TIME_PRECISE",
+
         "HELP_USERS" : "Click or tap on a user below to manage that user. Depending on your access level, users can be added and deleted, and their passwords can be changed.",
 
-        "SECTION_HEADER_USERS"       : "Users"
+        "SECTION_HEADER_USERS"       : "Users",
+
+        "TABLE_HEADER_LAST_ACTIVE" : "Last active",
+        "TABLE_HEADER_USERNAME"    : "Username"
 
     },
     

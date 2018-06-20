@@ -42,6 +42,7 @@ angular.module('settings').directive('guacSettingsPreferences', [function guacSe
             var languageService       = $injector.get('languageService');
             var permissionService     = $injector.get('permissionService');
             var preferenceService     = $injector.get('preferenceService');
+            var requestService        = $injector.get('requestService');
             var userService           = $injector.get('userService');
 
             /**
@@ -150,7 +151,7 @@ angular.module('settings').directive('guacSettingsPreferences', [function guacSe
                 
                 // Save the user with the new password
                 userService.updateUserPassword(dataSource, username, $scope.oldPassword, $scope.newPassword)
-                .success(function passwordUpdated() {
+                .then(function passwordUpdated() {
                 
                     // Clear the password fields
                     $scope.oldPassword      = null;
@@ -164,38 +165,33 @@ angular.module('settings').directive('guacSettingsPreferences', [function guacSe
                         },
                         actions : [ ACKNOWLEDGE_ACTION ]
                     });
-                })
-                
-                // Notify of any errors
-                .error(function passwordUpdateFailed(error) {
-                    guacNotification.showStatus({
-                        className  : 'error',
-                        title      : 'SETTINGS_PREFERENCES.DIALOG_HEADER_ERROR',
-                        text       : error.translatableMessage,
-                        actions    : [ ACKNOWLEDGE_ACTION ]
-                    });
-                });
+                }, guacNotification.SHOW_REQUEST_ERROR);
                 
             };
 
             // Retrieve defined languages
             languageService.getLanguages()
-            .success(function languagesRetrieved(languages) {
-                $scope.languages = languages;
-            });
+            .then(function languagesRetrieved(languages) {
+                $scope.languages = Object.keys(languages).map(function(key) {
+                    return {
+                        key: key,
+                        value: languages[key]
+                    };
+                });
+            }, requestService.WARN);
 
             // Retrieve current permissions
-            permissionService.getPermissions(dataSource, username)
-            .success(function permissionsRetrieved(permissions) {
+            permissionService.getEffectivePermissions(dataSource, username)
+            .then(function permissionsRetrieved(permissions) {
 
                 // Add action for changing password if permission is granted
                 $scope.canChangePassword = PermissionSet.hasUserPermission(permissions,
                         PermissionSet.ObjectPermissionType.UPDATE, username);
                         
             })
-            .error(function permissionsFailed(error) {
+            ['catch'](requestService.createErrorCallback(function permissionsFailed(error) {
                 $scope.canChangePassword = false;
-            });
+            }));
 
             /**
              * Returns whether critical data has completed being loaded.

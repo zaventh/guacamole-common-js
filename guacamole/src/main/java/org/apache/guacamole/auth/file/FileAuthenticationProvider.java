@@ -19,26 +19,22 @@
 
 package org.apache.guacamole.auth.file;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import org.apache.guacamole.GuacamoleException;
 import org.apache.guacamole.environment.Environment;
 import org.apache.guacamole.environment.LocalEnvironment;
 import org.apache.guacamole.net.auth.Credentials;
 import org.apache.guacamole.net.auth.simple.SimpleAuthenticationProvider;
 import org.apache.guacamole.xml.DocumentHandler;
-import org.apache.guacamole.properties.FileGuacamoleProperty;
 import org.apache.guacamole.protocol.GuacamoleConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * Authenticates users against a static list of username/password pairs.
@@ -70,20 +66,6 @@ public class FileAuthenticationProvider extends SimpleAuthenticationProvider {
     private final Environment environment;
 
     /**
-     * The XML file to read the user mapping from. This property has been
-     * deprecated, as the name "basic" is ridiculous, and providing for
-     * configurable user-mapping.xml locations is unnecessary complexity. Use
-     * GUACAMOLE_HOME/user-mapping.xml instead.
-     */
-    @Deprecated
-    public static final FileGuacamoleProperty BASIC_USER_MAPPING = new FileGuacamoleProperty() {
-
-        @Override
-        public String getName() { return "basic-user-mapping"; }
-
-    };
-
-    /**
      * The filename to use for the user mapping.
      */
     public static final String USER_MAPPING_FILENAME = "user-mapping.xml";
@@ -107,38 +89,17 @@ public class FileAuthenticationProvider extends SimpleAuthenticationProvider {
 
     /**
      * Returns a UserMapping containing all authorization data given within
-     * the XML file specified by the "basic-user-mapping" property in
-     * guacamole.properties. If the XML file has been modified or has not yet
-     * been read, this function may reread the file.
+     * GUACAMOLE_HOME/user-mapping.xml. If the XML file has been modified or has
+     * not yet been read, this function may reread the file.
      *
      * @return
      *     A UserMapping containing all authorization data within the user
      *     mapping XML file, or null if the file cannot be found/parsed.
      */
-    @SuppressWarnings("deprecation") // We must continue to use the "basic-user-mapping" property until it is truly no longer supported
     private UserMapping getUserMapping() {
 
-        // Get user mapping file, defaulting to GUACAMOLE_HOME/user-mapping.xml
-        File userMappingFile;
-        try {
-
-            // Continue supporting deprecated property, but warn in the logs
-            userMappingFile = environment.getProperty(BASIC_USER_MAPPING);
-            if (userMappingFile != null)
-                logger.warn("The \"basic-user-mapping\" property is deprecated. Please use the \"GUACAMOLE_HOME/user-mapping.xml\" file instead.");
-
-            // Read user mapping from GUACAMOLE_HOME
-            if (userMappingFile == null)
-                userMappingFile = new File(environment.getGuacamoleHome(), USER_MAPPING_FILENAME);
-
-        }
-
-        // Abort if property cannot be parsed
-        catch (GuacamoleException e) {
-            logger.warn("Unable to read user mapping filename from properties: {}", e.getMessage());
-            logger.debug("Error parsing user mapping property.", e);
-            return null;
-        }
+        // Read user mapping from GUACAMOLE_HOME/user-mapping.xml
+        File userMappingFile = new File(environment.getGuacamoleHome(), USER_MAPPING_FILENAME);
 
         // Abort if user mapping does not exist
         if (!userMappingFile.exists()) {
@@ -151,6 +112,22 @@ public class FileAuthenticationProvider extends SimpleAuthenticationProvider {
 
             logger.debug("Reading user mapping file: \"{}\"", userMappingFile);
 
+            // Set up XML parser
+            SAXParser parser;
+            try {
+                parser = SAXParserFactory.newInstance().newSAXParser();
+            }
+            catch (ParserConfigurationException e) {
+                logger.error("Unable to create XML parser for reading \"{}\": {}", USER_MAPPING_FILENAME, e.getMessage());
+                logger.debug("An instance of SAXParser could not be created.", e);
+                return null;
+            }
+            catch (SAXException e) {
+                logger.error("Unable to create XML parser for reading \"{}\": {}", USER_MAPPING_FILENAME, e.getMessage());
+                logger.debug("An instance of SAXParser could not be created.", e);
+                return null;
+            }
+
             // Parse document
             try {
 
@@ -162,14 +139,8 @@ public class FileAuthenticationProvider extends SimpleAuthenticationProvider {
                 DocumentHandler contentHandler = new DocumentHandler(
                         "user-mapping", userMappingHandler);
 
-                // Set up XML parser
-                XMLReader parser = XMLReaderFactory.createXMLReader();
-                parser.setContentHandler(contentHandler);
-
                 // Read and parse file
-                InputStream input = new BufferedInputStream(new FileInputStream(userMappingFile));
-                parser.parse(new InputSource(input));
-                input.close();
+                parser.parse(userMappingFile, contentHandler);
 
                 // Store mod time and user mapping
                 lastModified = userMappingFile.lastModified();

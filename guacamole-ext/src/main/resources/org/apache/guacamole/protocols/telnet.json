@@ -39,8 +39,7 @@
             "fields" : [
                 {
                     "name"  : "color-scheme",
-                    "type"  : "ENUM",
-                    "options" : [ "", "black-white", "gray-black", "green-black", "white-black" ]
+                    "type"  : "TEXT"
                 },
                 {
                     "name"  : "font-name",
@@ -55,6 +54,22 @@
                     "name"    : "read-only",
                     "type"    : "BOOLEAN",
                     "options" : [ "true" ]
+                }
+            ]
+        },
+
+        {
+            "name" : "behavior",
+            "fields" : [
+                {
+                    "name"    : "backspace",
+                    "type"    : "ENUM",
+                    "options" : [ "", "127", "8" ]
+                },
+                {
+                    "name"  : "terminal-type",
+                    "type"    : "ENUM",
+                    "options" : [ "", "xterm", "xterm-256color", "vt220", "vt100", "ansi", "linux" ]
                 }
             ]
         },
@@ -88,6 +103,21 @@
                 {
                     "name"  : "recording-name",
                     "type"  : "TEXT"
+                },
+                {
+                    "name"  : "recording-exclude-output",
+                    "type"  : "BOOLEAN",
+                    "options" : [ "true" ]
+                },
+                {
+                    "name"  : "recording-exclude-mouse",
+                    "type"  : "BOOLEAN",
+                    "options" : [ "true" ]
+                },
+                {
+                    "name"  : "recording-include-keys",
+                    "type"  : "BOOLEAN",
+                    "options" : [ "true" ]
                 },
                 {
                     "name"  : "create-recording-path",

@@ -26,7 +26,7 @@
     <groupId>org.apache.guacamole</groupId>
     <artifactId>guacamole-client</artifactId>
     <packaging>pom</packaging>
-    <version>0.9.14</version>
+    <version>1.0.0</version>
     <name>guacamole-client</name>
     <url>http://guacamole.apache.org/</url>
 
@@ -54,14 +54,24 @@
         <module>extensions/guacamole-auth-header</module>
         <module>extensions/guacamole-auth-jdbc</module>
         <module>extensions/guacamole-auth-ldap</module>
-        <module>extensions/guacamole-auth-noauth</module>
         <module>extensions/guacamole-auth-openid</module>
+        <module>extensions/guacamole-auth-quickconnect</module>
+        <module>extensions/guacamole-auth-totp</module>
 
         <!-- Example web applications using the Guacamole APIs -->
         <module>doc/guacamole-example</module>
         <module>doc/guacamole-playback-example</module>
 
     </modules>
+
+    <profiles>
+        <profile>
+            <id>lgpl-extensions</id>
+            <modules>
+                <module>extensions/guacamole-auth-radius</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -105,6 +115,7 @@
                         <exclude>.dockerignore</exclude>
                         <exclude>CONTRIBUTING</exclude>
                         <exclude>**/README.md</exclude>
+                        <exclude>extensions/**/*</exclude>
                     </excludes>
                 </configuration>
 

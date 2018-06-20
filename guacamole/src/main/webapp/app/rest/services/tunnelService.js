@@ -28,10 +28,10 @@ angular.module('rest').factory('tunnelService', ['$injector',
     var Error = $injector.get('Error');
 
     // Required services
-    var $http                 = $injector.get('$http');
     var $q                    = $injector.get('$q');
     var $window               = $injector.get('$window');
     var authenticationService = $injector.get('authenticationService');
+    var requestService        = $injector.get('requestService');
 
     var service = {};
 
@@ -71,7 +71,7 @@ angular.module('rest').factory('tunnelService', ['$injector',
         };
 
         // Retrieve tunnels
-        return $http({
+        return requestService({
             method  : 'GET',
             url     : 'api/session/tunnels',
             params  : httpParameters
@@ -100,7 +100,7 @@ angular.module('rest').factory('tunnelService', ['$injector',
         };
 
         // Retrieve all associated sharing profiles
-        return $http({
+        return requestService({
             method  : 'GET',
             url     : 'api/session/tunnels/' + encodeURIComponent(tunnel)
                         + '/activeConnection/connection/sharingProfiles',
@@ -136,7 +136,7 @@ angular.module('rest').factory('tunnelService', ['$injector',
         };
 
         // Generate sharing credentials
-        return $http({
+        return requestService({
             method  : 'GET',
             url     : 'api/session/tunnels/' + encodeURIComponent(tunnel)
                         + '/activeConnection/sharingCredentials/'
@@ -189,8 +189,14 @@ angular.module('rest').factory('tunnelService', ['$injector',
      */
     service.downloadStream = function downloadStream(tunnel, stream, mimetype, filename) {
 
+        // Work-around for IE missing window.location.origin
+        if (!$window.location.origin)
+            var streamOrigin = $window.location.protocol + '//' + $window.location.hostname + ($window.location.port ? (':' + $window.location.port) : '');
+        else
+            var streamOrigin = $window.location.origin;
+
         // Build download URL
-        var url = $window.location.origin
+        var url = streamOrigin
                 + $window.location.pathname
                 + 'api/session/tunnels/' + encodeURIComponent(tunnel)
                 + '/streams/' + encodeURIComponent(stream.index)
@@ -224,7 +230,9 @@ angular.module('rest').factory('tunnelService', ['$injector',
         // ends, in the browser does NOT fire the "load" event for downloads
         stream.onend = function downloadComplete() {
             $window.setTimeout(function cleanupIframe() {
-                document.body.removeChild(iframe);
+                if (iframe.parentElement) {
+                    document.body.removeChild(iframe);
+                }
             }, DOWNLOAD_CLEANUP_WAIT);
         };
 
@@ -267,8 +275,14 @@ angular.module('rest').factory('tunnelService', ['$injector',
 
         var deferred = $q.defer();
 
+        // Work-around for IE missing window.location.origin
+        if (!$window.location.origin)
+            var streamOrigin = $window.location.protocol + '//' + $window.location.hostname + ($window.location.port ? (':' + $window.location.port) : '');
+        else
+            var streamOrigin = $window.location.origin;
+
         // Build upload URL
-        var url = $window.location.origin
+        var url = streamOrigin
                 + $window.location.pathname
                 + 'api/session/tunnels/' + encodeURIComponent(tunnel)
                 + '/streams/' + encodeURIComponent(stream.index)

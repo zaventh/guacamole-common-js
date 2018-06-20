@@ -50,6 +50,7 @@ angular.module('navigation').directive('guacUserMenu', [function guacUserMenu() 
             var $location             = $injector.get('$location');
             var $route                = $injector.get('$route');
             var authenticationService = $injector.get('authenticationService');
+            var requestService        = $injector.get('requestService');
             var userService           = $injector.get('userService');
             var userPageService       = $injector.get('userPageService');
 
@@ -96,7 +97,7 @@ angular.module('navigation').directive('guacUserMenu', [function guacUserMenu() 
 
             // Pull user data
             userService.getUser(authenticationService.getDataSource(), $scope.username)
-                    .success(function userRetrieved(user) {
+                    .then(function userRetrieved(user) {
 
                 // Store retrieved user object
                 $scope.user = user;
@@ -110,7 +111,7 @@ angular.module('navigation').directive('guacUserMenu', [function guacUserMenu() 
                 var email = user.attributes[User.Attributes.EMAIL_ADDRESS];
                 $scope.userURL = email ? 'mailto:' + email : null;
 
-            });
+            }, requestService.WARN);
 
             /**
              * The available main pages for the current user.
@@ -141,7 +142,9 @@ angular.module('navigation').directive('guacUserMenu', [function guacUserMenu() 
              * after logout completes.
              */
             $scope.logout = function logout() {
-                authenticationService.logout()['finally'](function logoutComplete() {
+                authenticationService.logout()
+                ['catch'](requestService.IGNORE)
+                ['finally'](function logoutComplete() {
                     if ($location.path() !== '/')
                         $location.url('/');
                     else

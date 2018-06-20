@@ -20,13 +20,14 @@
 package org.apache.guacamole.auth.jdbc.connection;
 
 
-import java.util.Date;
+import org.apache.guacamole.auth.jdbc.base.ModeledActivityRecord;
 import org.apache.guacamole.net.auth.ConnectionRecord;
 
 /**
  * A ConnectionRecord which is backed by a database model.
  */
-public class ModeledConnectionRecord implements ConnectionRecord {
+public class ModeledConnectionRecord extends ModeledActivityRecord
+        implements ConnectionRecord {
 
     /**
      * The model object backing this connection record.
@@ -42,6 +43,7 @@ public class ModeledConnectionRecord implements ConnectionRecord {
      *     The model object to use to back this connection record.
      */
     public ModeledConnectionRecord(ConnectionRecordModel model) {
+        super(model);
         this.model = model;
     }
 
@@ -63,31 +65,6 @@ public class ModeledConnectionRecord implements ConnectionRecord {
     @Override
     public String getSharingProfileName() {
         return model.getSharingProfileName();
-    }
-
-    @Override
-    public Date getStartDate() {
-        return model.getStartDate();
-    }
-
-    @Override
-    public Date getEndDate() {
-        return model.getEndDate();
-    }
-
-    @Override
-    public String getRemoteHost() {
-        return model.getRemoteHost();
-    }
-
-    @Override
-    public String getUsername() {
-        return model.getUsername();
-    }
-
-    @Override
-    public boolean isActive() {
-        return false;
     }
 
 }

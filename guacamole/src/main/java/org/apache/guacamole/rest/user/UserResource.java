@@ -21,8 +21,11 @@ package org.apache.guacamole.rest.user;
 
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -30,6 +33,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import org.apache.guacamole.GuacamoleException;
 import org.apache.guacamole.GuacamoleSecurityException;
+import org.apache.guacamole.net.auth.ActivityRecord;
 import org.apache.guacamole.net.auth.AuthenticationProvider;
 import org.apache.guacamole.net.auth.Credentials;
 import org.apache.guacamole.net.auth.User;
@@ -38,6 +42,9 @@ import org.apache.guacamole.net.auth.UserContext;
 import org.apache.guacamole.net.auth.credentials.GuacamoleCredentialsException;
 import org.apache.guacamole.rest.directory.DirectoryObjectResource;
 import org.apache.guacamole.rest.directory.DirectoryObjectTranslator;
+import org.apache.guacamole.rest.history.APIActivityRecord;
+import org.apache.guacamole.rest.identifier.RelatedObjectSetResource;
+import org.apache.guacamole.rest.permission.APIPermissionSet;
 import org.apache.guacamole.rest.permission.PermissionSetResource;
 
 /**
@@ -87,10 +94,35 @@ public class UserResource
             @Assisted Directory<User> directory,
             @Assisted User user,
             DirectoryObjectTranslator<User, APIUser> translator) {
-        super(directory, user, translator);
+        super(userContext, directory, user, translator);
         this.userContext = userContext;
         this.directory = directory;
         this.user = user;
+    }
+
+    /**
+     * Retrieves the login (session) history of a single user.
+     *
+     * @return
+     *     A list of activity records, describing the start and end times of
+     *     this user's sessions.
+     *
+     * @throws GuacamoleException
+     *     If an error occurs while retrieving the user history.
+     */
+    @GET
+    @Path("history")
+    public List<APIActivityRecord> getUserHistory()
+            throws GuacamoleException {
+
+        // Retrieve the requested user's history
+        List<APIActivityRecord> apiRecords = new ArrayList<APIActivityRecord>();
+        for (ActivityRecord record : user.getHistory())
+            apiRecords.add(new APIActivityRecord(record));
+
+        // Return the converted history
+        return apiRecords;
+
     }
 
     @Override
@@ -127,7 +159,7 @@ public class UserResource
         credentials.setUsername(user.getIdentifier());
         credentials.setPassword(userPasswordUpdate.getOldPassword());
         credentials.setRequest(request);
-        credentials.setSession(request.getSession(true));
+        credentials.setSession(request.getSession(false));
         credentials.setRemoteAddress(request.getRemoteAddr());
         credentials.setRemoteHostname(request.getRemoteHost());
 
@@ -151,7 +183,8 @@ public class UserResource
 
     /**
      * Returns a resource which abstracts operations available on the overall
-     * permissions granted to the User represented by this UserResource.
+     * permissions granted directly to the User represented by this
+     * UserResource.
      *
      * @return
      *     A resource which representing the permissions granted to the User
@@ -160,6 +193,40 @@ public class UserResource
     @Path("permissions")
     public PermissionSetResource getPermissions() {
         return new PermissionSetResource(user);
+    }
+
+    /**
+     * Returns a read-only view of the permissions effectively granted to this
+     * user, including permissions which may be inherited or implied.
+     *
+     * @return
+     *     A read-only view of the permissions effectively granted to this
+     *     user.
+     *
+     * @throws GuacamoleException
+     *     If the effective permissions for this user cannot be retrieved.
+     */
+    @GET
+    @Path("effectivePermissions")
+    public APIPermissionSet getEffectivePermissions() throws GuacamoleException {
+        return new APIPermissionSet(user.getEffectivePermissions());
+    }
+
+    /**
+     * Returns a resource which abstracts operations available on the set of
+     * user groups of which the User represented by this UserResource is a
+     * member.
+     *
+     * @return
+     *     A resource which represents the set of user groups of which the
+     *     User represented by this UserResource is a member.
+     *
+     * @throws GuacamoleException
+     *     If the group membership for this user cannot be retrieved.
+     */
+    @Path("userGroups")
+    public RelatedObjectSetResource getUserGroups() throws GuacamoleException {
+        return new RelatedObjectSetResource(user.getUserGroups());
     }
 
 }

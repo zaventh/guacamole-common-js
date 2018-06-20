@@ -28,9 +28,10 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 import org.apache.guacamole.auth.jdbc.base.ModeledDirectoryObject;
 import org.apache.guacamole.auth.jdbc.security.PasswordEncryptionService;
@@ -51,10 +52,14 @@ import org.apache.guacamole.form.TextField;
 import org.apache.guacamole.form.TimeField;
 import org.apache.guacamole.form.TimeZoneField;
 import org.apache.guacamole.net.auth.ActivityRecord;
+import org.apache.guacamole.net.auth.Permissions;
+import org.apache.guacamole.net.auth.RelatedObjectSet;
 import org.apache.guacamole.net.auth.User;
 import org.apache.guacamole.net.auth.permission.ObjectPermissionSet;
 import org.apache.guacamole.net.auth.permission.SystemPermission;
 import org.apache.guacamole.net.auth.permission.SystemPermissionSet;
+import org.apache.guacamole.net.auth.simple.SimpleObjectPermissionSet;
+import org.apache.guacamole.net.auth.simple.SimpleRelatedObjectSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -143,6 +148,31 @@ public class ModeledUser extends ModeledDirectoryObject<UserModel> implements Us
         PROFILE,
         ACCOUNT_RESTRICTIONS
     ));
+
+    /**
+     * The names of all attributes which are explicitly supported by this
+     * extension's User objects.
+     */
+    public static final Set<String> ATTRIBUTE_NAMES =
+            Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
+                User.Attribute.FULL_NAME,
+                User.Attribute.EMAIL_ADDRESS,
+                User.Attribute.ORGANIZATION,
+                User.Attribute.ORGANIZATIONAL_ROLE,
+                DISABLED_ATTRIBUTE_NAME,
+                EXPIRED_ATTRIBUTE_NAME,
+                ACCESS_WINDOW_START_ATTRIBUTE_NAME,
+                ACCESS_WINDOW_END_ATTRIBUTE_NAME,
+                VALID_FROM_ATTRIBUTE_NAME,
+                VALID_UNTIL_ATTRIBUTE_NAME,
+                TIMEZONE_ATTRIBUTE_NAME
+            )));
+
+    /**
+     * Service for managing users.
+     */
+    @Inject
+    private UserService userService;
 
     /**
      * Service for hashing passwords.
@@ -353,6 +383,11 @@ public class ModeledUser extends ModeledDirectoryObject<UserModel> implements Us
         return userPermissionService.getPermissionSet(getCurrentUser(), this);
     }
 
+    @Override
+    public ObjectPermissionSet getUserGroupPermissions() throws GuacamoleException {
+        return new SimpleObjectPermissionSet();
+    }
+
     /**
      * Stores all restricted (privileged) attributes within the given Map,
      * pulling the values of those attributes from the underlying user model.
@@ -542,9 +577,15 @@ public class ModeledUser extends ModeledDirectoryObject<UserModel> implements Us
     }
 
     @Override
+    public Set<String> getSupportedAttributeNames() {
+        return ATTRIBUTE_NAMES;
+    }
+
+    @Override
     public Map<String, String> getAttributes() {
 
-        Map<String, String> attributes = new HashMap<String, String>();
+        // Include any defined arbitrary attributes
+        Map<String, String> attributes = super.getAttributes();
 
         // Always include unrestricted attributes
         putUnrestrictedAttributes(attributes);
@@ -558,6 +599,9 @@ public class ModeledUser extends ModeledDirectoryObject<UserModel> implements Us
 
     @Override
     public void setAttributes(Map<String, String> attributes) {
+
+        // Set arbitrary attributes
+        super.setAttributes(attributes);
 
         // Always assign unrestricted attributes
         setUnrestrictedAttributes(attributes);
@@ -795,13 +839,23 @@ public class ModeledUser extends ModeledDirectoryObject<UserModel> implements Us
     }
 
     @Override
-    public Date getLastActive() {
-        return null;
+    public Timestamp getLastActive() {
+        return getModel().getLastActive();
     }
 
     @Override
     public List<ActivityRecord> getHistory() throws GuacamoleException {
-        return Collections.<ActivityRecord>emptyList();
+        return userService.retrieveHistory(getCurrentUser(), this);
+    }
+
+    @Override
+    public RelatedObjectSet getUserGroups() throws GuacamoleException {
+        return new SimpleRelatedObjectSet();
+    }
+
+    @Override
+    public Permissions getEffectivePermissions() throws GuacamoleException {
+        return this;
     }
 
 }
