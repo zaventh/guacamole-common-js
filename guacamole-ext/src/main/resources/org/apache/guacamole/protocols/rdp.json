@@ -170,9 +170,17 @@
                     "options" : [ "true" ]
                 },
                 {
+                    "name"   : "printer-name",
+                    "type"   : "TEXT"
+                },
+                {
                     "name"    : "enable-drive",
                     "type"    : "BOOLEAN",
                     "options" : [ "true" ]
+                },
+                {
+                    "name"    : "drive-name",
+                    "type"    : "TEXT"
                 },
                 {
                     "name"  : "drive-path",
@@ -332,6 +340,10 @@
                 {
                     "name"  : "sftp-port",
                     "type"  : "NUMERIC"
+                },
+                {
+                    "name"  : "sftp-host-key",
+                    "type"  : "TEXT"
                 },
                 {
                     "name"  : "sftp-username",

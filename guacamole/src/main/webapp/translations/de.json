@@ -378,6 +378,12 @@
         "FIELD_HEADER_PRIVATE_KEY" : "Privater Schlüssel:",
         "FIELD_HEADER_READ_ONLY"   : "Nur-Lesen:",
 
+        "FIELD_OPTION_COLOR_SCHEME_BLACK_WHITE" : "Schwarz auf Weiß",
+        "FIELD_OPTION_COLOR_SCHEME_EMPTY"       : "",
+        "FIELD_OPTION_COLOR_SCHEME_GRAY_BLACK"  : "Grau auf Schwarz",
+        "FIELD_OPTION_COLOR_SCHEME_GREEN_BLACK" : "Grün auf Schwarz",
+        "FIELD_OPTION_COLOR_SCHEME_WHITE_BLACK" : "Weiß auf Schwarz",
+
         "FIELD_OPTION_FONT_SIZE_8"     : "8",
         "FIELD_OPTION_FONT_SIZE_9"     : "9",
         "FIELD_OPTION_FONT_SIZE_10"    : "10",
@@ -415,6 +421,12 @@
         "FIELD_HEADER_PASSWORD_REGEX" : "Reguläre Passwortersetzungen:",
         "FIELD_HEADER_PORT"           : "Port:",
         "FIELD_HEADER_READ_ONLY"      : "Nur-Lesen:",
+
+        "FIELD_OPTION_COLOR_SCHEME_BLACK_WHITE" : "Schwarz auf Weiß",
+        "FIELD_OPTION_COLOR_SCHEME_EMPTY"       : "",
+        "FIELD_OPTION_COLOR_SCHEME_GRAY_BLACK"  : "Grau auf Schwarz",
+        "FIELD_OPTION_COLOR_SCHEME_GREEN_BLACK" : "Grün auf Schwarz",
+        "FIELD_OPTION_COLOR_SCHEME_WHITE_BLACK" : "Weiß auf Schwarz",
 
         "FIELD_OPTION_FONT_SIZE_8"     : "8",
         "FIELD_OPTION_FONT_SIZE_9"     : "9",
@@ -609,7 +621,7 @@
         
         "FORMAT_STARTDATE" : "@:APP.FORMAT_DATE_TIME_PRECISE",
 
-        "HELP_SESSIONS" : "Alle aktiven Guacamole Sitzungen werden hier aufgelistet. Wenn Sie eine oder mehrere Sitzungen beenden wollen, wählen Sie diese Sitzung durch Aktivierung der nebenstehende Box und klicken auf \"Beende Sitzung\". Beendung einer Sitzung trennt den Benutzer von dessen Verbindung unverzüglich.",
+        "HELP_SESSIONS" : "Diese Seite wird mit derzeit aktiven Verbindungen gefüllt. Die aufgelisteten Verbindungen und die Möglichkeit, diese Verbindungen zu beenden, hängen von Ihrer Zugriffsebene ab. Wenn Sie eine oder mehrere Sitzungen beenden wollen, wählen Sie diese Sitzung durch Aktivierung der nebenstehende Box und klicken auf \"Beende Sitzung\". Beendung einer Sitzung trennt den Benutzer von dessen Verbindung unverzüglich.",
         
         "INFO_NO_SESSIONS" : "Keine aktiven Sitzungen",
 

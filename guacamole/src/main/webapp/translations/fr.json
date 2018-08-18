@@ -381,6 +381,12 @@
         "FIELD_HEADER_PRIVATE_KEY" : "Clé privée:",
         "FIELD_HEADER_READ_ONLY"   : "Lecture seule:",
 
+        "FIELD_OPTION_COLOR_SCHEME_BLACK_WHITE" : "Noir sur blanc",
+        "FIELD_OPTION_COLOR_SCHEME_EMPTY"       : "",
+        "FIELD_OPTION_COLOR_SCHEME_GRAY_BLACK"  : "Gris sur noir",
+        "FIELD_OPTION_COLOR_SCHEME_GREEN_BLACK" : "Vert sur noir",
+        "FIELD_OPTION_COLOR_SCHEME_WHITE_BLACK" : "Blanc sur noir",
+
         "FIELD_OPTION_FONT_SIZE_8"     : "8",
         "FIELD_OPTION_FONT_SIZE_9"     : "9",
         "FIELD_OPTION_FONT_SIZE_10"    : "10",
@@ -418,6 +424,12 @@
         "FIELD_HEADER_PASSWORD_REGEX" : "Expression régulière Mot de passe:",
         "FIELD_HEADER_PORT"           : "Port:",
         "FIELD_HEADER_READ_ONLY"      : "Lecture seule:",
+
+        "FIELD_OPTION_COLOR_SCHEME_BLACK_WHITE" : "Noir sur blanc",
+        "FIELD_OPTION_COLOR_SCHEME_EMPTY"       : "",
+        "FIELD_OPTION_COLOR_SCHEME_GRAY_BLACK"  : "Gris sur noir",
+        "FIELD_OPTION_COLOR_SCHEME_GREEN_BLACK" : "Vert sur noir",
+        "FIELD_OPTION_COLOR_SCHEME_WHITE_BLACK" : "Blanc sur noir",
 
         "FIELD_OPTION_FONT_SIZE_8"     : "8",
         "FIELD_OPTION_FONT_SIZE_9"     : "9",
@@ -612,7 +624,7 @@
         
         "FORMAT_STARTDATE" : "@:APP.FORMAT_DATE_TIME_PRECISE",
 
-        "HELP_SESSIONS" : "Toutes les connexions actives Guacamole sont listées ici. Si vous souhaitez en fermer une ou plusieurs, sélectionner les et cliquer sur \"Fermer Sessions\". La fermeture d'une session déconnectera immédiatement l'utilisateur.", 
+        "HELP_SESSIONS" : "Cette page sera remplie avec des connexions actuellement actives. Les connexions répertoriées et la possibilité de supprimer ces connexions dépendent de votre niveau d'accès. Si vous souhaitez en fermer une ou plusieurs, sélectionner les et cliquer sur \"Fermer Sessions\". La fermeture d'une session déconnectera immédiatement l'utilisateur.", 
         
         "INFO_NO_SESSIONS" : "Pas de session ouverte",
 

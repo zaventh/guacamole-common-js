@@ -12,6 +12,10 @@
                 {
                     "name"  : "port",
                     "type"  : "NUMERIC"
+                },
+                {
+                    "name"  : "host-key",
+                    "type"  : "TEXT"
                 }
             ]
         },
@@ -43,7 +47,8 @@
             "fields" : [
                 {
                     "name"  : "color-scheme",
-                    "type"  : "TEXT"
+                    "type"  : "TEXT",
+                    "options" : [ "", "black-white", "gray-black", "green-black", "white-black" ]
                 },
                 {
                     "name"  : "font-name",

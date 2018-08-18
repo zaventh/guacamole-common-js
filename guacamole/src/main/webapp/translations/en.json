@@ -31,6 +31,7 @@
 
         "DIALOG_HEADER_ERROR" : "Error",
 
+        "ERROR_PAGE_UNAVAILABLE"  : "An error has occurred and this action cannot be completed. If the problem persists, please notify your system administrator or check your system logs.",
         "ERROR_PASSWORD_BLANK"    : "Your password cannot be blank.",
         "ERROR_PASSWORD_MISMATCH" : "The provided passwords do not match.",
         
@@ -94,7 +95,7 @@
 
         "ERROR_UPLOAD_100"     : "File transfer is either not supported or not enabled. Please contact your system administrator, or check your system logs.",
         "ERROR_UPLOAD_201"     : "Too many files are currently being transferred. Please wait for existing transfers to complete, and then try again.",
-        "ERROR_UPLOAD_202"     : "The file cannot be transferred because the remote desktop server is taking too long to respond. Please try again or or contact your system administrator.",
+        "ERROR_UPLOAD_202"     : "The file cannot be transferred because the remote desktop server is taking too long to respond. Please try again or contact your system administrator.",
         "ERROR_UPLOAD_203"     : "The remote desktop server encountered an error during transfer. Please try again or contact your system administrator.",
         "ERROR_UPLOAD_204"     : "The destination for the file transfer does not exist. Please check that the destination exists and try again.",
         "ERROR_UPLOAD_205"     : "The destination for the file transfer is currently locked. Please wait for any in-progress tasks to complete and try again.",
@@ -303,9 +304,11 @@
 
         "INFO_READ_ONLY" : "Sorry, but this user account cannot be edited.",
 
-        "SECTION_HEADER_CONNECTIONS" : "Connections",
-        "SECTION_HEADER_EDIT_USER"   : "Edit User",
-        "SECTION_HEADER_PERMISSIONS" : "Permissions",
+        "SECTION_HEADER_ALL_CONNECTIONS"     : "All Connections",
+        "SECTION_HEADER_CONNECTIONS"         : "Connections",
+        "SECTION_HEADER_CURRENT_CONNECTIONS" : "Current Connections",
+        "SECTION_HEADER_EDIT_USER"           : "Edit User",
+        "SECTION_HEADER_PERMISSIONS"         : "Permissions",
 
         "TEXT_CONFIRM_DELETE" : "Users cannot be restored after they have been deleted. Are you sure you want to delete this user?"
 
@@ -323,6 +326,7 @@
         "FIELD_HEADER_DISABLE_AUTH"    : "Disable authentication:",
         "FIELD_HEADER_DOMAIN"          : "Domain:",
         "FIELD_HEADER_DPI"             : "Resolution (DPI):",
+        "FIELD_HEADER_DRIVE_NAME"      : "Drive name:",
         "FIELD_HEADER_DRIVE_PATH"      : "Drive path:",
         "FIELD_HEADER_ENABLE_AUDIO_INPUT"         : "Enable audio input (microphone):",
         "FIELD_HEADER_ENABLE_DESKTOP_COMPOSITION" : "Enable desktop composition (Aero):",
@@ -349,6 +353,7 @@
         "FIELD_HEADER_LOAD_BALANCE_INFO" : "Load balance info/cookie:",
         "FIELD_HEADER_PASSWORD"        : "Password:",
         "FIELD_HEADER_PORT"            : "Port:",
+        "FIELD_HEADER_PRINTER_NAME"    : "Redirected printer name:",
         "FIELD_HEADER_PRECONNECTION_BLOB" : "Preconnection BLOB (VM ID):",
         "FIELD_HEADER_PRECONNECTION_ID"   : "RDP source ID:",
         "FIELD_HEADER_READ_ONLY"      : "Read-only:",
@@ -364,6 +369,7 @@
         "FIELD_HEADER_SECURITY"        : "Security mode:",
         "FIELD_HEADER_SERVER_LAYOUT"   : "Keyboard layout:",
         "FIELD_HEADER_SFTP_DIRECTORY"             : "Default upload directory:",
+        "FIELD_HEADER_SFTP_HOST_KEY"              : "Public host key (Base64):",
         "FIELD_HEADER_SFTP_HOSTNAME"              : "Hostname:",
         "FIELD_HEADER_SFTP_SERVER_ALIVE_INTERVAL" : "SFTP keepalive interval:",
         "FIELD_HEADER_SFTP_PASSPHRASE"            : "Passphrase:",
@@ -430,16 +436,17 @@
         "FIELD_HEADER_COMMAND"      : "Execute command:",
         "FIELD_HEADER_CREATE_RECORDING_PATH" : "Automatically create recording path:",
         "FIELD_HEADER_CREATE_TYPESCRIPT_PATH" : "Automatically create typescript path:",
-        "FIELD_HEADER_FONT_NAME"   : "Font name:",
-        "FIELD_HEADER_FONT_SIZE"   : "Font size:",
-        "FIELD_HEADER_ENABLE_SFTP" : "Enable SFTP:",
-        "FIELD_HEADER_HOSTNAME"    : "Hostname:",
-        "FIELD_HEADER_USERNAME"    : "Username:",
-        "FIELD_HEADER_PASSWORD"    : "Password:",
-        "FIELD_HEADER_PASSPHRASE"  : "Passphrase:",
-        "FIELD_HEADER_PORT"        : "Port:",
-        "FIELD_HEADER_PRIVATE_KEY" : "Private key:",
-        "FIELD_HEADER_READ_ONLY"   : "Read-only:",
+        "FIELD_HEADER_FONT_NAME"     : "Font name:",
+        "FIELD_HEADER_FONT_SIZE"     : "Font size:",
+        "FIELD_HEADER_ENABLE_SFTP"   : "Enable SFTP:",
+        "FIELD_HEADER_HOST_KEY"      : "Public host key (Base64):",
+        "FIELD_HEADER_HOSTNAME"      : "Hostname:",
+        "FIELD_HEADER_USERNAME"      : "Username:",
+        "FIELD_HEADER_PASSWORD"      : "Password:",
+        "FIELD_HEADER_PASSPHRASE"    : "Passphrase:",
+        "FIELD_HEADER_PORT"          : "Port:",
+        "FIELD_HEADER_PRIVATE_KEY"   : "Private key:",
+        "FIELD_HEADER_READ_ONLY"     : "Read-only:",
         "FIELD_HEADER_RECORDING_EXCLUDE_MOUSE"  : "Exclude mouse:",
         "FIELD_HEADER_RECORDING_EXCLUDE_OUTPUT" : "Exclude graphics/streams:",
         "FIELD_HEADER_RECORDING_INCLUDE_KEYS"   : "Include key events:",
@@ -454,6 +461,12 @@
         "FIELD_OPTION_BACKSPACE_EMPTY" : "",
         "FIELD_OPTION_BACKSPACE_8"     : "Backspace (Ctrl-H)",
         "FIELD_OPTION_BACKSPACE_127"   : "Delete (Ctrl-?)",
+
+        "FIELD_OPTION_COLOR_SCHEME_BLACK_WHITE" : "Black on white",
+        "FIELD_OPTION_COLOR_SCHEME_EMPTY"       : "",
+        "FIELD_OPTION_COLOR_SCHEME_GRAY_BLACK"  : "Gray on black",
+        "FIELD_OPTION_COLOR_SCHEME_GREEN_BLACK" : "Green on black",
+        "FIELD_OPTION_COLOR_SCHEME_WHITE_BLACK" : "White on black",
 
         "FIELD_OPTION_FONT_SIZE_8"     : "8",
         "FIELD_OPTION_FONT_SIZE_9"     : "9",
@@ -519,6 +532,12 @@
         "FIELD_OPTION_BACKSPACE_8"     : "Backspace (Ctrl-H)",
         "FIELD_OPTION_BACKSPACE_127"   : "Delete (Ctrl-?)",
 
+        "FIELD_OPTION_COLOR_SCHEME_BLACK_WHITE" : "Black on white",
+        "FIELD_OPTION_COLOR_SCHEME_EMPTY"       : "",
+        "FIELD_OPTION_COLOR_SCHEME_GRAY_BLACK"  : "Gray on black",
+        "FIELD_OPTION_COLOR_SCHEME_GREEN_BLACK" : "Green on black",
+        "FIELD_OPTION_COLOR_SCHEME_WHITE_BLACK" : "White on black",
+
         "FIELD_OPTION_FONT_SIZE_8"     : "8",
         "FIELD_OPTION_FONT_SIZE_9"     : "9",
         "FIELD_OPTION_FONT_SIZE_10"    : "10",
@@ -575,6 +594,7 @@
         "FIELD_HEADER_RECORDING_NAME" : "Recording name:",
         "FIELD_HEADER_RECORDING_PATH" : "Recording path:",
         "FIELD_HEADER_SFTP_DIRECTORY"             : "Default upload directory:",
+        "FIELD_HEADER_SFTP_HOST_KEY"              : "Public host key (Base64):",
         "FIELD_HEADER_SFTP_HOSTNAME"              : "Hostname:",
         "FIELD_HEADER_SFTP_SERVER_ALIVE_INTERVAL" : "SFTP keepalive interval:",
         "FIELD_HEADER_SFTP_PASSPHRASE"            : "Passphrase:",
@@ -738,7 +758,7 @@
         
         "FORMAT_STARTDATE" : "@:APP.FORMAT_DATE_TIME_PRECISE",
 
-        "HELP_SESSIONS" : "All currently-active Guacamole sessions are listed here. If you wish to kill one or more sessions, check the box next to those sessions and click \"Kill Sessions\". Killing a session will immediately disconnect the user from the associated connection.",
+        "HELP_SESSIONS" : "This page will be populated with currently-active connections. The connections listed and the ability to kill those connections is dependent upon your access level. If you wish to kill one or more sessions, check the box next to those sessions and click \"Kill Sessions\". Killing a session will immediately disconnect the user from the associated connection.",
         
         "INFO_NO_SESSIONS" : "No active sessions",
 
