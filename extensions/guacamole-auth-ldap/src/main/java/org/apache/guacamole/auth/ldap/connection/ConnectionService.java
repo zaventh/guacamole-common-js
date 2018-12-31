@@ -35,12 +35,12 @@ import org.apache.guacamole.auth.ldap.ConfigurationService;
 import org.apache.guacamole.auth.ldap.EscapingService;
 import org.apache.guacamole.GuacamoleException;
 import org.apache.guacamole.GuacamoleServerException;
+import org.apache.guacamole.auth.ldap.user.LDAPAuthenticatedUser;
 import org.apache.guacamole.net.auth.AuthenticatedUser;
 import org.apache.guacamole.net.auth.Connection;
+import org.apache.guacamole.net.auth.TokenInjectingConnection;
 import org.apache.guacamole.net.auth.simple.SimpleConnection;
 import org.apache.guacamole.protocol.GuacamoleConfiguration;
-import org.apache.guacamole.token.StandardTokens;
-import org.apache.guacamole.token.TokenFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,10 +122,6 @@ public class ConnectionService {
                 confService.getLDAPSearchConstraints()
             );
 
-            // Build token filter containing credential tokens
-            TokenFilter tokenFilter = new TokenFilter();
-            StandardTokens.addStandardTokens(tokenFilter, user);
-
             // Produce connections for each readable configuration
             Map<String, Connection> connections = new HashMap<String, Connection>();
             while (results.hasMore()) {
@@ -180,13 +176,17 @@ public class ConnectionService {
 
                     }
 
-                    // Filter the configuration, substituting all defined tokens
-                    tokenFilter.filterValues(config.getParameters());
-
                     // Store connection using cn for both identifier and name
                     String name = cn.getStringValue();
                     Connection connection = new SimpleConnection(name, name, config);
                     connection.setParentIdentifier(LDAPAuthenticationProvider.ROOT_CONNECTION_GROUP);
+
+                    // Inject LDAP-specific tokens only if LDAP handled user
+                    // authentication
+                    if (user instanceof LDAPAuthenticatedUser)
+                        connection = new TokenInjectingConnection(connection,
+                                ((LDAPAuthenticatedUser) user).getTokens());
+
                     connections.put(name, connection);
 
                 }
@@ -245,7 +245,11 @@ public class ConnectionService {
         StringBuilder connectionSearchFilter = new StringBuilder();
 
         // Add the prefix to the search filter, prefix filter searches for guacConfigGroups with the userDN as the member attribute value
-        connectionSearchFilter.append("(&(objectClass=guacConfigGroup)(|(member=");
+        connectionSearchFilter.append("(&(objectClass=guacConfigGroup)");
+        connectionSearchFilter.append("(|(");
+        connectionSearchFilter.append(escapingService.escapeLDAPSearchFilter(
+                confService.getMemberAttribute()));
+        connectionSearchFilter.append("=");
         connectionSearchFilter.append(escapingService.escapeLDAPSearchFilter(userDN));
         connectionSearchFilter.append(")");
 
@@ -257,7 +261,11 @@ public class ConnectionService {
             LDAPSearchResults userRoleGroupResults = ldapConnection.search(
                 groupBaseDN,
                 LDAPConnection.SCOPE_SUB,
-                "(&(!(objectClass=guacConfigGroup))(member=" + escapingService.escapeLDAPSearchFilter(userDN) + "))",
+                "(&(!(objectClass=guacConfigGroup))(" 
+                        + escapingService.escapeLDAPSearchFilter(
+                                confService.getMemberAttribute()) 
+                        + "=" + escapingService.escapeLDAPSearchFilter(userDN) 
+                        + "))",
                 null,
                 false,
                 confService.getLDAPSearchConstraints()

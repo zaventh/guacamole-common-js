@@ -88,6 +88,8 @@ angular.module('settings').directive('guacSettingsUsers', [function guacSettings
              * @type String[]
              */
             $scope.filteredUserProperties = [
+                'user.attributes["guac-full-name"]',
+                'user.attributes["guac-organization"]',
                 'user.lastActive',
                 'user.username'
             ];
@@ -107,7 +109,9 @@ angular.module('settings').directive('guacSettingsUsers', [function guacSettings
              */
             $scope.order = new SortOrder([
                 'user.username',
-                '-user.lastActive'
+                '-user.lastActive',
+                'user.attributes["guac-organization"]',
+                'user.attributes["guac-full-name"]'
             ]);
 
             // Get session date format
@@ -150,9 +154,11 @@ angular.module('settings').directive('guacSettingsUsers', [function guacSettings
                     return null;
 
                 // For each data source
-                for (var dataSource in $scope.permissions) {
+                var dataSources = _.keys($scope.permissions).sort();
+                for (var i = 0; i < dataSources.length; i++) {
 
                     // Retrieve corresponding permission set
+                    var dataSource = dataSources[i];
                     var permissionSet = $scope.permissions[dataSource];
 
                     // Can create users if adminstrator or have explicit permission
