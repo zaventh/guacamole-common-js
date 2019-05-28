@@ -19,7 +19,9 @@
 
 package org.apache.guacamole.auth.cas.ticket;
 
+import com.google.common.io.BaseEncoding;
 import com.google.inject.Inject;
+import java.net.URI;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -28,7 +30,6 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.nio.charset.Charset;
-import javax.xml.bind.DatatypeConverter;
 import org.apache.guacamole.GuacamoleException;
 import org.apache.guacamole.GuacamoleServerException;
 import org.apache.guacamole.auth.cas.conf.ConfigurationService;
@@ -83,13 +84,13 @@ public class TicketValidationService {
         // Retrieve the configured CAS URL, establish a ticket validator,
         // and then attempt to validate the supplied ticket.  If that succeeds,
         // grab the principal returned by the validator.
-        String casServerUrl = confService.getAuthorizationEndpoint();
-        Cas20ProxyTicketValidator validator = new Cas20ProxyTicketValidator(casServerUrl);
+        URI casServerUrl = confService.getAuthorizationEndpoint();
+        Cas20ProxyTicketValidator validator = new Cas20ProxyTicketValidator(casServerUrl.toString());
         validator.setAcceptAnyProxy(true);
         validator.setEncoding("UTF-8");
         try {
-            String confRedirectURI = confService.getRedirectURI();
-            Assertion a = validator.validate(ticket, confRedirectURI);
+            URI confRedirectURI = confService.getRedirectURI();
+            Assertion a = validator.validate(ticket, confRedirectURI.toString());
             AttributePrincipal principal =  a.getPrincipal();
 
             // Retrieve username and set the credentials.
@@ -161,7 +162,7 @@ public class TicketValidationService {
             cipher.init(Cipher.DECRYPT_MODE, clearpassKey);
 
             // Decode and decrypt, and return a new string.
-            final byte[] pass64 = DatatypeConverter.parseBase64Binary(encryptedPassword);
+            final byte[] pass64 = BaseEncoding.base64().decode(encryptedPassword);
             final byte[] cipherData = cipher.doFinal(pass64);
             return new String(cipherData, Charset.forName("UTF-8"));
 

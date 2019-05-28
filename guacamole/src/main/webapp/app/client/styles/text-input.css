@@ -17,15 +17,10 @@
  * under the License.
  */
 
-/**
- * The config block for setting up the HTTP PATCH method.
- */
-angular.module('index').config(['$httpProvider', 
-        function indexHttpPatchConfig($httpProvider) {
-    
-    $httpProvider.defaults.headers.patch = {
-        'Content-Type': 'application/json'
-    }
-}]);
+.text-input-container {
+    display: none;
+}
 
-
+.text-input-container.open {
+    display: block;
+}

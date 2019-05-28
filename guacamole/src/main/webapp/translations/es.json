@@ -4,9 +4,6 @@
     
     "APP" : {
 
-        "NAME"    : "Apache Guacamole",
-        "VERSION" : "0.9.13-incubating",
-
         "ACTION_ACKNOWLEDGE"        : "OK",
         "ACTION_CANCEL"             : "Cancelar",
         "ACTION_CLONE"              : "Clonar",
@@ -103,6 +100,8 @@
         "ERROR_UPLOAD_308"     : "La transferencia de ficheros se ha parado. Normalmente esto es debido a problemas de red, como señal inalámbrica irregular, o simplemente velocidades de red muy lentas. Por favor revisa tu red e intente de nuevo.",
         "ERROR_UPLOAD_31D"     : "Se estan transfiriendo muchos ficheros actualmente. Por favor espere a que finalicen las transferencias de fichero existentes e intente de nuevo.",
         "ERROR_UPLOAD_DEFAULT" : "Ha ocurrido un error interno en el servidor Guacamole y la conexión ha finalizado. Si el problema persiste, por favor notifíquelo al administrador o compruebe los registros del sistema.",
+
+        "FIELD_PLACEHOLDER_FILTER" : "@:APP.FIELD_PLACEHOLDER_FILTER",
 
         "HELP_CLIPBOARD"           : "Aquí aparecerá el texto copiado/cortado en Guacamole. Los cambios en el texto de abajo afectaran al portapapeles remoto.",
         "HELP_INPUT_METHOD_NONE"   : "No se está usando un método de entrada. La entrada de teclado se acepta desde un teclado físico conectado.",
@@ -399,6 +398,7 @@
 
         "SECTION_HEADER_AUTHENTICATION"     : "Autenticación",
         "SECTION_HEADER_BASIC_PARAMETERS"   : "Configuración básica",
+        "SECTION_HEADER_CLIPBOARD"          : "Portapapeles",
         "SECTION_HEADER_DEVICE_REDIRECTION" : "Redirección dispositivo",
         "SECTION_HEADER_DISPLAY"            : "Visualización",
         "SECTION_HEADER_GATEWAY"            : "Puerta de enlace remota",
@@ -460,6 +460,7 @@
         "NAME" : "SSH",
 
         "SECTION_HEADER_AUTHENTICATION" : "Autenticación",
+        "SECTION_HEADER_CLIPBOARD"      : "Portapapeles",
         "SECTION_HEADER_DISPLAY"        : "Mostrar",
         "SECTION_HEADER_NETWORK"        : "Red",
         "SECTION_HEADER_RECORDING"      : "Grabación de pantalla",
@@ -512,6 +513,7 @@
         "NAME" : "Telnet",
 
         "SECTION_HEADER_AUTHENTICATION" : "Autenticación",
+        "SECTION_HEADER_CLIPBOARD"      : "Portapapeles",
         "SECTION_HEADER_DISPLAY"        : "Mostrar",
         "SECTION_HEADER_RECORDING"      : "Grabación pantalla",
         "SECTION_HEADER_TYPESCRIPT"     : "Script de escritura (Próxima sesión de grabación)",

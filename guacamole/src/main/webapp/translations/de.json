@@ -91,6 +91,8 @@
         "ERROR_UPLOAD_31D"     : "Die maximale Anzahl gleichzeiter Dateiübertragungen erreicht. Bitte warte bis laufende Dateiübertagungen abgeschlossen sind und versuche es erneut.",
         "ERROR_UPLOAD_DEFAULT" : "Die Verbindung wurde aufgrund eines interen Fehlers im Guacamole Server beendet. Sollte dieses Problem weiterhin bestehen informieren Sie den Systemadministrator oder überprüfen Sie die Protokolle.",
 
+        "FIELD_PLACEHOLDER_FILTER" : "@:APP.FIELD_PLACEHOLDER_FILTER",
+
         "HELP_CLIPBOARD"           : "Kopierter oder ausgeschnittener Text aus Guacamole wird hier angezeigt. Änderungen am Text werden direkt auf die entfernte Zwischenablage angewandt.",
         "HELP_INPUT_METHOD_NONE"   : "Keine Eingabemethode in Verwendung. Tastatureingaben werden von der Hardwaretastatur akzeptiert.",
         "HELP_INPUT_METHOD_OSK"    : "Bildschirmeingaben und die eingebettete Guacamole Bildschrimtastatur werden akzeptiert. Die Bildschirmtastatur gestattet Tastenkombinationen die ansonsten unmöglich sind (z.B.: Strg-Alt-Del).",
@@ -354,6 +356,7 @@
 
         "SECTION_HEADER_AUTHENTICATION"     : "Authentifizierung",
         "SECTION_HEADER_BASIC_PARAMETERS"   : "Basiseinstellungen",
+        "SECTION_HEADER_CLIPBOARD"          : "Zwischenablage",
         "SECTION_HEADER_DEVICE_REDIRECTION" : "Geräteumleitung",
         "SECTION_HEADER_DISPLAY"            : "Bildschirm",
         "SECTION_HEADER_NETWORK"            : "Netzwerk",
@@ -403,6 +406,7 @@
         "NAME" : "SSH",
 
         "SECTION_HEADER_AUTHENTICATION" : "Authentifizierung",
+        "SECTION_HEADER_CLIPBOARD"      : "Zwischenablage",
         "SECTION_HEADER_DISPLAY"        : "Bildschirm",
         "SECTION_HEADER_NETWORK"        : "Netzwerk",
         "SECTION_HEADER_SESSION"        : "Sitzung / Umgebung",
@@ -447,6 +451,7 @@
         "NAME" : "Telnet",
 
         "SECTION_HEADER_AUTHENTICATION" : "Authentifizierung",
+        "SECTION_HEADER_CLIPBOARD"      : "Zwischenablage",
         "SECTION_HEADER_DISPLAY"        : "Bildschirm",
         "SECTION_HEADER_NETWORK"        : "Netzwerk"
 
