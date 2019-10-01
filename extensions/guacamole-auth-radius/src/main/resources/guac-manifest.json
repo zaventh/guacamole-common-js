@@ -10,7 +10,8 @@
     ],
 
     "translations" : [
-        "translations/en.json"
+        "translations/en.json",
+        "translations/ja.json"
     ],
 
     "js" : [
@@ -18,7 +19,6 @@
     ],
 
     "resources" : {
-        "templates/radiusResponseField.html" : "text/html",
         "templates/radiusStateField.html"    : "text/html"
     }
 

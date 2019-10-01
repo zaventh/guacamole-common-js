@@ -91,6 +91,7 @@
                     "type"    : "ENUM",
                     "options" : [
                         "",
+                        "de-ch-qwertz",
                         "de-de-qwertz",
                         "en-gb-qwerty",
                         "en-us-qwerty",
@@ -98,6 +99,7 @@
                         "failsafe",
                         "fr-fr-azerty",
                         "fr-ch-qwertz",
+                        "hu-hu-qwertz",                        
                         "it-it-qwerty",
                         "ja-jp-qwerty",
                         "pt-br-qwerty",
