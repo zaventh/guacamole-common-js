@@ -4,14 +4,15 @@
   "description": "The Guacamole javascript client",
   "main": "dist/guacamole-common.js",
   "scripts": {
-    "prepublishOnly": "gulp"
+    "build": "gulp",
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/padarom/guacamole-common-js.git"
   },
   "files": [
-    "dist"
+    "dist/"
   ],
   "keywords": [
     "guacamole",
